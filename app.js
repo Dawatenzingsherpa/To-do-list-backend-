@@ -44,6 +44,32 @@ app.post("/toDoList",async (req,res)=>{
   })
 })
 
+
+app.patch('/toDoList/:id',async (req,res)=>{
+  const id = req.params.id;
+  const {name , date , time , photoUrl , status} = req.body;
+  await toDoList.findByIdAndUpdate(id,{
+    name,
+    date,
+    time,
+    photoUrl,
+    status
+  })
+
+  res.status(201).json({
+    "message" : "Data Updated Successfully"
+  })
+})
+
+app.delete('/toDoList/:id',async (req,res)=>{
+  const id = req.params.id;
+  await toDoList.findByIdAndDelete(id);
+
+  res.status(200).json({
+    message : 'Data Deleted Successfully'
+  })
+})
+
 app.listen(3000,()=>{
   console.log('NodeJs Project has started at 3000 port');
 })
