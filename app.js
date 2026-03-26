@@ -11,9 +11,20 @@ app.get("/",(req,res)=>{
   res.send("hello earth");
 })
 
-app.get('/toDoList',(req,res)=>{
-  res.json({
-    name : "cooking"
+app.get('/toDoList',async (req,res)=>{
+  const todoLists = await toDoList.find();
+  res.status(200).json({
+    message : "Data Fetched Successfully",
+    data : todoLists
+  })
+})
+
+app.get('/toDoList/:id',async(req,res)=>{
+  const id = req.params.id;
+  const toDo = await toDoList.findById(id);
+  res.status(200).json({
+    message : 'Data Fetched Successfully',
+    data : toDo
   })
 })
 
