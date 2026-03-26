@@ -21,5 +21,5 @@ const toDoListScheme = new mongoose.Schema({
   
 })
 
-const toDoList = mongoose.Model("toDoList",toDoListScheme);
+const toDoList = mongoose.model("toDoList",toDoListScheme);
 module.exports = toDoList;

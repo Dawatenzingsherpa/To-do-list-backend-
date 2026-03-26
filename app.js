@@ -1,21 +1,37 @@
 const express = require('express');
-const connectToDatabase = require('./database');
 const app = express();
+const connectToDatabase = require('./database');
+const toDoList = require('./Model/toDoListModel');
 
 
 connectToDatabase();
+app.use(express.json());
 
-app.get("/",(res,req)=>{
-  req.send("hello earth");
+app.get("/",(req,res)=>{
+  res.send("hello earth");
 })
 
-app.get('/toDoList',(res,req)=>{
-  req.json({
+app.get('/toDoList',(req,res)=>{
+  res.json({
     name : "cooking"
   })
 })
 
 
+app.post("/toDoList",async (req,res)=>{
+  const {name , date , time , photoUrl , status} = req.body;
+  await toDoList.create({
+    name,
+    date,
+    time,
+    photoUrl,
+    status
+  })
+
+  res.status(201).json({
+    "message" : "Data post Successfully"
+  })
+})
 
 app.listen(3000,()=>{
   console.log('NodeJs Project has started at 3000 port');
